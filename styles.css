@@ -8,6 +8,7 @@
 
 html, body {
   overflow-x: hidden;
+  height: 100%;
 }
 
 body {
@@ -15,12 +16,13 @@ body {
   background-color: #f1f3f5;
   color: #333;
   line-height: 1.6;
+  min-height: 100vh;
 }
 
 /* Containers */
 .container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 0 20px;
 }
 
@@ -164,6 +166,7 @@ body {
   width: 100%;
   border-radius: 10px;
   margin-bottom: 15px;
+  object-fit: cover;
 }
 
 .product-card h3 {
@@ -184,6 +187,7 @@ body {
   border-radius: 30px;
   text-decoration: none;
   transition: background 0.3s;
+  display: inline-block;
 }
 
 .btn-secondary:hover {
@@ -212,6 +216,10 @@ body {
   z-index: 2000;
 }
 
+.popup-compra.active {
+  display: flex;
+}
+
 .popup-content {
   background-color: #fff;
   border-radius: 12px;
@@ -232,6 +240,7 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   font-weight: bold;
+  user-select: none;
 }
 
 .popup-imagem img {
@@ -239,6 +248,7 @@ body {
   width: 100%;
   border-radius: 10px;
   height: auto;
+  object-fit: contain;
 }
 
 .popup-info {
@@ -256,11 +266,22 @@ body {
   padding: 8px;
   width: 150px;
   margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
 #calcular-frete {
   padding: 8px 16px;
   cursor: pointer;
+  border: none;
+  background-color: #4f46e5;
+  color: white;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+#calcular-frete:hover {
+  background-color: #3730a3;
 }
 
 #resultado-frete {
@@ -272,6 +293,18 @@ body {
 #botao-pagar {
   margin-top: 30px;
   width: 100%;
+  padding: 12px 0;
+  border: none;
+  background-color: #10b981;
+  color: white;
+  font-weight: bold;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#botao-pagar:hover {
+  background-color: #059669;
 }
 
 .preco-antigo {
@@ -288,6 +321,7 @@ body {
   margin: 0 0 15px 0;
 }
 
+/* Responsivo */
 @media (max-width: 768px) {
   .hero {
     height: auto;
@@ -333,3 +367,52 @@ body {
     flex-wrap: wrap;
   }
 }
+
+/* Sticky menu lateral */
+#menu-lateral {
+  position: sticky;
+  top: 15px;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Hero carrossel backgrounds */
+.hero {
+  background-image: url('assets/images/camisas.png');
+}
+
+.hero-slide-1 {
+  background-image: url('assets/images/head.jpg');
+}
+
+.hero-slide-2 {
+  background-image: url('assets/images/pc1.jpg');
+}
+
+
+/* Para esconder scrollbar no menu lateral no mobile */
+.menu-lateral::-webkit-scrollbar {
+  display: none;
+}
+
+/* Classe ativa para categoria */
+.categoria-link.active {
+  color: #10b981 !important;
+  font-weight: 700;
+  border-bottom: 2px solid #10b981;
+}
+
+/* Sr-only para acessibilidade */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+

@@ -1,202 +1,212 @@
-// Contador do carrinho
-const contador = document.getElementById('contador-carrinho');
-let totalCarrinho = 0;
-
-// Dados dos produtos, com campo promocao e precoOriginal opcional
-const produtosData = [
-  { nome: "PC Gamer Ryzen 7", preco: "R$ 4.999,90", precoOriginal: "R$ 5.999,90", imagem: "assets/images/pc.png", categoria: "informatica", promocao: true },
-  { nome: "PC Gamer Ryzen 9", preco: "R$ 4.999,90", precoOriginal: "R$ 5.999,90", imagem: "assets/images/pc3.avif", categoria: "informatica", promocao: true },
-  { nome: "Camisa Social Slim Fit", preco: "R$ 99,90", precoOriginal: "R$ 159,90", imagem: "assets/images/camisa1.png", categoria: "roupas", promocao: true },
-  { nome: "Camisa Social Slim Fit", preco: "R$ 99,90", precoOriginal: "R$ 159,90",imagem: "assets/images/camisa2.png", categoria: "roupas", promocao: true },
-  { nome: "Headset Gamer", preco: "R$ 89,90", precoOriginal: "R$ 129,90", imagem: "assets/images/head1.webp", categoria: "acessorios", promocao: true },
-  { nome: "Apple iPhone 16 128GB", preco: "R$ 4.299,90", precoOriginal: "R$ 5.099,90", imagem: "assets/images/16.webp", categoria: "celulares", promocao: true },
-  { nome: "Apple iPhone 13 128GB", preco: "R$ 2.999,90", precoOriginal: "R$ 3.699,90", imagem: "assets/images/13pro.png", categoria: "celulares", promocao: true }
+// Produtos exemplo com categorias
+const produtos = [
+  {
+    id: 1,
+    nome: "Notebook Gamer",
+    categoria: "informatica",
+    precoAntigo: 4999.99,
+    precoNovo: 4499.99,
+    img: "assets/images/pc3.avif"
+  },
+  {
+    id: 2,
+    nome: "Notebook Gamer",
+    categoria: "informatica",
+    precoAntigo: 4999.99,
+    precoNovo: 4499.99,
+    img: "assets/images/pc.png"
+  },
+  {
+    id: 3,
+    nome: "Camiseta Estampada",
+    categoria: "roupas",
+    precoAntigo: 79.90,
+    precoNovo: 59.90,
+    img: "assets/images/camisa2.png"
+  },
+  {
+    id: 4,
+    nome: "Camiseta Estampada",
+    categoria: "roupas",
+    precoAntigo: 79.90,
+    precoNovo: 59.90,
+    img: "assets/images/camisa1.png"
+  },
+  {
+    id: 5,
+    nome: "Fone Bluetooth",
+    categoria: "acessorios",
+    precoAntigo: 299.00,
+    precoNovo: 249.00,
+    img: "assets/images/head1.webp"
+  },
+  {
+    id: 6,
+    nome: "iPhone 14 Pro",
+    categoria: "celulares",
+    precoAntigo: 7999.99,
+    precoNovo: 7399.99,
+    img: "assets/images/13pro.png"
+  },
+  {
+    id: 7,
+    nome: "iPhone 16 Pro",
+    categoria: "celulares",
+    precoAntigo: 7999.99,
+    precoNovo: 5399.99,
+    img: "assets/images/16.webp"
+  },
 ];
 
-// Elementos DOM
+// Estado do carrinho
+let carrinho = [];
+
+// Referências DOM
 const listaProdutos = document.getElementById("lista-produtos");
-const popup = document.getElementById('popup-compra');
-const fecharPopup = document.getElementById('fechar-popup');
-const popupImg = document.getElementById('popup-img');
-const popupNome = document.getElementById('popup-nome');
-const popupPrecoAntigo = document.getElementById('popup-preco-antigo');
-const popupPrecoNovo = document.getElementById('popup-preco-novo');
-const resultadoFrete = document.getElementById('resultado-frete');
-const inputCep = document.getElementById('cep');
-const btnCalcularFrete = document.getElementById('calcular-frete');
-const btnPagar = document.getElementById('botao-pagar');
+const categoriasLinks = document.querySelectorAll(".categoria-link");
+const popupCompra = document.getElementById("popup-compra");
+const fecharPopup = document.getElementById("fechar-popup");
+const popupNome = document.getElementById("popup-nome");
+const popupPrecoAntigo = document.getElementById("popup-preco-antigo");
+const popupPrecoNovo = document.getElementById("popup-preco-novo");
+const popupImg = document.getElementById("popup-img");
+const cepInput = document.getElementById("cep");
+const btnCalcularFrete = document.getElementById("calcular-frete");
+const resultadoFrete = document.getElementById("resultado-frete");
+const botaoPagar = document.getElementById("botao-pagar");
+const contadorCarrinho = document.getElementById("contador-carrinho");
 
-let produtoAtual = null;
+let produtoSelecionado = null;
+let valorFreteAtual = 0;
 
-// Função para formatar preço em Real (R$) - recebe número
-function formatarPreco(precoNum) {
-  return precoNum.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-// Função para converter preço em string para número
-// Ex: "R$ 4.999,90" -> 4999.90
-function precoStrParaNum(precoStr) {
-  return Number(precoStr.replace(/[R$\s\.]/g, '').replace(',', '.'));
-}
-
-// Renderizar produtos (todos ou por categoria)
-function renderizarProdutos(categoria = "todos") {
+// Função para mostrar produtos filtrados
+function mostrarProdutos(categoria = "todos") {
   listaProdutos.innerHTML = "";
-
-  let produtosParaExibir;
-  if (categoria === "todos") {
-    produtosParaExibir = produtosData;
-  } else {
-    produtosParaExibir = produtosData.filter(p => p.categoria === categoria);
-  }
-
-  produtosParaExibir.forEach((prod) => {
-    // Se tiver precoOriginal e promocao, mostra riscado
-    let precoHTML = "";
-    if (prod.promocao && prod.precoOriginal) {
-      precoHTML = `
-        <p class="preco-antigo">${prod.precoOriginal}</p>
-        <p class="preco-atual">${prod.preco}</p>
-      `;
-    } else {
-      precoHTML = `<p class="preco-atual">${prod.preco}</p>`;
-    }
-
+  const filtrados = categoria === "todos" ? produtos : produtos.filter(p => p.categoria === categoria);
+  filtrados.forEach(prod => {
     const card = document.createElement("div");
-    card.className = "product-card";
+    card.classList.add("product-card");
     card.innerHTML = `
-      <img src="${prod.imagem}" alt="${prod.nome}">
+      <img src="${prod.img}" alt="Foto do produto ${prod.nome}" />
       <h3>${prod.nome}</h3>
-      ${precoHTML}
-      <button class="btn-secondary btn-comprar" data-index="${produtosData.indexOf(prod)}">Comprar</button>
+      <p class="preco-antigo">R$ ${prod.precoAntigo.toFixed(2)}</p>
+      <p class="preco-atual">R$ ${prod.precoNovo.toFixed(2)}</p>
+      <button class="btn-primary btn-comprar" data-id="${prod.id}">Comprar</button>
     `;
     listaProdutos.appendChild(card);
   });
 
-  adicionarEventosComprar();
-}
-
-// Renderizar somente produtos em promoção
-function renderizarPromocoes() {
-  listaProdutos.innerHTML = "";
-
-  const produtosPromocao = produtosData.filter(p => p.promocao);
-
-  produtosPromocao.forEach((prod) => {
-    let precoHTML = "";
-    if (prod.precoOriginal) {
-      precoHTML = `
-        <p class="preco-antigo">${prod.precoOriginal}</p>
-        <p class="preco-atual">${prod.preco}</p>
-      `;
-    } else {
-      precoHTML = `<p class="preco-atual">${prod.preco}</p>`;
-    }
-
-    const card = document.createElement("div");
-    card.className = "product-card";
-    card.innerHTML = `
-      <img src="${prod.imagem}" alt="${prod.nome}">
-      <h3>${prod.nome}</h3>
-      ${precoHTML}
-      <button class="btn-secondary btn-comprar" data-index="${produtosData.indexOf(prod)}">Comprar</button>
-    `;
-    listaProdutos.appendChild(card);
-  });
-
-  adicionarEventosComprar();
-}
-
-// Adiciona eventos de clique aos botões "Comprar"
-function adicionarEventosComprar() {
-  document.querySelectorAll('.btn-comprar').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const index = Number(btn.getAttribute('data-index'));
-      abrirPopupCompra(index);
+  // Adiciona evento nos botões comprar
+  const botoesComprar = document.querySelectorAll(".btn-comprar");
+  botoesComprar.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = parseInt(e.target.getAttribute("data-id"));
+      abrirPopupCompra(id);
     });
   });
 }
 
-// Abre popup com detalhes do produto selecionado
-function abrirPopupCompra(index) {
-  produtoAtual = produtosData[index];
-
-  popupImg.src = produtoAtual.imagem;
-  popupImg.alt = produtoAtual.nome;
-  popupNome.textContent = produtoAtual.nome;
-
-  // Se tiver precoOriginal, mostrar riscado
-  if (produtoAtual.precoOriginal) {
-    popupPrecoAntigo.textContent = produtoAtual.precoOriginal;
-    popupPrecoAntigo.style.display = "block";
-  } else {
-    popupPrecoAntigo.style.display = "none";
-  }
-
-  popupPrecoNovo.textContent = produtoAtual.preco;
-
-  resultadoFrete.textContent = '';
-  inputCep.value = '';
-
-  popup.style.display = 'flex';
-}
-
-// Fecha o popup
-fecharPopup.addEventListener('click', () => {
-  popup.style.display = 'none';
-});
-
-// Calcular frete (simulação)
-btnCalcularFrete.addEventListener('click', () => {
-  const cep = inputCep.value.trim();
-
-  if (cep.length !== 8 || isNaN(Number(cep))) {
-    resultadoFrete.textContent = 'Por favor, insira um CEP válido com 8 dígitos.';
-    return;
-  }
-
-  // Simulação de frete fixo
-  const precoFrete = 19.90;
-  const prazo = 5; // dias úteis
-
-  resultadoFrete.textContent = `Frete: ${formatarPreco(precoFrete)} (Entrega em até ${prazo} dias úteis)`;
-});
-
-// Finalizar compra: adiciona ao carrinho e fecha popup
-btnPagar.addEventListener('click', () => {
-  totalCarrinho++;
-  contador.textContent = totalCarrinho;
-  alert(`Compra do produto "${produtoAtual.nome}" realizada com sucesso!`);
-  popup.style.display = 'none';
-});
-
-// Eventos para filtro de categorias - mostra todos os produtos daquela categoria
-document.querySelectorAll(".categorias a").forEach(link => {
-  link.addEventListener("click", e => {
+// Controle filtro categorias
+categoriasLinks.forEach(link => {
+  link.addEventListener("click", (e) => {
     e.preventDefault();
-    const categoria = link.getAttribute("data-categoria");
-    renderizarProdutos(categoria);
+    categoriasLinks.forEach(l => l.classList.remove("active"));
+    e.currentTarget.classList.add("active");
+    const cat = e.currentTarget.getAttribute("data-categoria");
+    mostrarProdutos(cat);
   });
 });
 
-// Inicializa mostrando só os produtos em promoção
-renderizarPromocoes();
+// Abrir popup compra
+function abrirPopupCompra(id) {
+  produtoSelecionado = produtos.find(p => p.id === id);
+  if (!produtoSelecionado) return;
 
-const imagensHero = [
-    'url("assets/images/iph.jpg")',
-    'url("assets/images/head.jpg")',
-    'url("assets/images/pc1.jpg")'
-  ];
+  popupNome.textContent = produtoSelecionado.nome;
+  popupPrecoAntigo.textContent = `R$ ${produtoSelecionado.precoAntigo.toFixed(2)}`;
+  popupPrecoNovo.textContent = `R$ ${produtoSelecionado.precoNovo.toFixed(2)}`;
+  popupImg.src = produtoSelecionado.img;
+  resultadoFrete.textContent = "";
+  botaoPagar.disabled = true;
+  cepInput.value = "";
+  valorFreteAtual = 0;
+  popupCompra.style.display = "flex";
+  cepInput.focus();
+}
 
-  let indexAtual = 0;
-  const secaoHero = document.getElementById('hero');
+// Fechar popup
+fecharPopup.addEventListener("click", () => {
+  popupCompra.style.display = "none";
+});
 
-  function trocarImagemFundo() {
-    secaoHero.style.backgroundImage = imagensHero[indexAtual];
-    indexAtual = (indexAtual + 1) % imagensHero.length;
+// Calcular frete (simulação)
+btnCalcularFrete.addEventListener("click", () => {
+  const cep = cepInput.value.trim();
+  if (!/^\d{8}$/.test(cep)) {
+    resultadoFrete.textContent = "Por favor, digite um CEP válido de 8 dígitos.";
+    resultadoFrete.style.color = "red";
+    botaoPagar.disabled = true;
+    return;
   }
+  // Simular cálculo do frete: valor baseado em dígitos do CEP (exemplo fictício)
+  valorFreteAtual = (parseInt(cep.slice(-3)) % 50) + 10; // R$10 a R$59
+  resultadoFrete.textContent = `Frete calculado: R$ ${valorFreteAtual.toFixed(2)}`;
+  resultadoFrete.style.color = "green";
+  botaoPagar.disabled = false;
+});
 
-  // Troca a cada 5 segundos
-  trocarImagemFundo(); // inicial
-  setInterval(trocarImagemFundo, 5000);
+// Botão pagar (simulação de integração PagBrasil)
+botaoPagar.addEventListener("click", () => {
+  if (!produtoSelecionado) return;
+  alert(`Redirecionando para pagamento:\nProduto: ${produtoSelecionado.nome}\nPreço: R$ ${produtoSelecionado.precoNovo.toFixed(2)}\nFrete: R$ ${valorFreteAtual.toFixed(2)}\nTotal: R$ ${(produtoSelecionado.precoNovo + valorFreteAtual).toFixed(2)}\n\n(Aqui você integraria com PagBrasil.)`);
+
+  // Simulação: adiciona produto no carrinho
+  carrinho.push(produtoSelecionado);
+  atualizarContadorCarrinho();
+  popupCompra.style.display = "none";
+});
+
+// Atualizar contador do carrinho
+function atualizarContadorCarrinho() {
+  contadorCarrinho.textContent = carrinho.length;
+}
+
+// Carrossel automático do hero (textos + fundo)
+const slides = [
+  {
+    titulo: "Explore Nossos Produtos",
+    texto: "Produtos de qualidade com preços que cabem no seu bolso.",
+    classe: "hero-slide-1"
+  },
+  {
+    titulo: "Tecnologia e Estilo",
+    texto: "Encontre notebooks, celulares e acessórios modernos.",
+    classe: "hero-slide-2"
+  },
+  {
+    titulo: "Moda e Conforto",
+    texto: "Roupas e acessórios para você se destacar.",
+    classe: "hero-slide-3"
+  }
+];
+
+let slideIndex = 0;
+const heroSection = document.getElementById("hero");
+const heroTitle = document.getElementById("hero-title");
+const heroText = document.getElementById("hero-text");
+
+function mudarSlide() {
+  slideIndex = (slideIndex + 1) % slides.length;
+  const slide = slides[slideIndex];
+  heroSection.className = "hero " + slide.classe;
+  heroTitle.textContent = slide.titulo;
+  heroText.textContent = slide.texto;
+}
+
+setInterval(mudarSlide, 8000); // troca a cada 8 segundos
+
+// Inicializa lista com todos os produtos
+mostrarProdutos();
+
+
 

@@ -2,30 +2,36 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Minha Loja Online</title>
-  <meta name="description" content="Loja online com produtos de informática, roupas, acessórios e mais!">
+  <meta name="description" content="Loja online com produtos de informática, roupas, acessórios e mais!" />
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="icon" href="favicon.ico" />
 </head>
 <body>
 
  <!-- Header -->
-<header class="header">
+<header class="header" role="banner">
   <div class="container">
-    <nav class="menu">
-      <div class="menu-lateral">
-        <div class="categorias">
-          <a href="#" data-categoria="informatica"><i class="fas fa-laptop"></i> Informática</a>
-          <a href="#" data-categoria="roupas"><i class="fas fa-tshirt"></i> Roupas</a>
-          <a href="#" data-categoria="acessorios"><i class="fas fa-headphones-alt"></i> Acessórios</a>
-          <a href="#" data-categoria="celulares"><i class="fas fa-mobile-alt"></i> iPhones</a>
+    <nav class="menu" role="navigation" aria-label="Menu principal">
+      <div class="menu-lateral" id="menu-lateral">
+        <div class="categorias" role="menu" aria-label="Categorias de produtos">
+          <a href="#" role="menuitem" data-categoria="todos" class="categoria-link active"><i class="fas fa-th-large"></i> Todos</a>
+          <a href="#" role="menuitem" data-categoria="informatica" class="categoria-link"><i class="fas fa-laptop" aria-hidden="true"></i> Informática</a>
+          <a href="#" role="menuitem" data-categoria="roupas" class="categoria-link"><i class="fas fa-tshirt" aria-hidden="true"></i> Roupas</a>
+          <a href="#" role="menuitem" data-categoria="acessorios" class="categoria-link"><i class="fas fa-headphones-alt" aria-hidden="true"></i> Acessórios</a>
+          <a href="#" role="menuitem" data-categoria="celulares" class="categoria-link"><i class="fas fa-mobile-alt" aria-hidden="true"></i> iPhones</a>
         </div>
-        <div class="acoes">
-          <a href="#contato"><i class="fas fa-phone-alt"></i> Contato</a>
-          <a href="#carrinho" id="icone-carrinho"><i class="fas fa-shopping-cart"></i> Carrinho (<span id="contador-carrinho">0</span>)</a>
-          <a href="#" id="abrirLogin"><i class="fas fa-user-circle"></i> Entrar</a>
+        <div class="acoes" role="menu" aria-label="Ações do usuário">
+          <a href="#contato" role="menuitem"><i class="fas fa-phone-alt" aria-hidden="true"></i> Contato</a>
+          <a href="#carrinho" id="icone-carrinho" role="menuitem" aria-live="polite" aria-atomic="true">
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrinho (<span id="contador-carrinho">0</span>)
+          </a>
+          <button id="abrirLogin" aria-haspopup="dialog" aria-controls="login-modal">
+            <i class="fas fa-user-circle" aria-hidden="true"></i> Entrar
+          </button>
         </div>
       </div>
     </nav>
@@ -33,44 +39,47 @@
 </header>
 
 <!-- HERO COM CARROSSEL -->
-<section class="hero" id="hero">
-  <div class="container">
-    <h1>Explore Nossos Produtos</h1>
-    <p>Produtos de qualidade com preços que cabem no seu bolso.</p>
+<section class="hero" id="hero" role="region" aria-label="Seção principal">
+  <div class="container hero-content">
+    <h1 id="hero-title">Explore Nossos Produtos</h1>
+    <p id="hero-text">Produtos de qualidade com preços que cabem no seu bolso.</p>
     <a href="#produtos" class="btn-primary">Ver Produtos</a>
   </div>
 </section>
 
 <!-- Produtos -->
-<section id="produtos" class="products">
+<main id="produtos" class="products" role="main">
   <div class="container">
     <h2>Produtos em Promoção</h2>
     <div class="product-list" id="lista-produtos"></div>
   </div>
-</section>
+</main>
 
-<div id="popup-compra" class="popup-compra">
+<!-- Popup de compra -->
+<div id="popup-compra" class="popup-compra" role="dialog" aria-modal="true" aria-labelledby="popup-nome" aria-describedby="popup-preco-novo">
   <div class="popup-content">
-    <span class="fechar-popup" id="fechar-popup">&times;</span>
+    <button class="fechar-popup" id="fechar-popup" aria-label="Fechar popup">&times;</button>
     <div class="popup-imagem">
-      <img src="" alt="Produto" id="popup-img" />
+      <img src="" alt="Imagem do produto" id="popup-img" />
     </div>
     <div class="popup-info">
       <h2 id="popup-nome"></h2>
-      <p>Preço antigo: <span id="popup-preco-antigo" style="text-decoration: line-through;"></span></p>
-      <p>Preço novo: <span id="popup-preco-novo" style="color: #4f46e5; font-weight: bold;"></span></p>
+      <p>Preço antigo: <span id="popup-preco-antigo" class="preco-antigo"></span></p>
+      <p>Preço novo: <span id="popup-preco-novo" class="preco-atual"></span></p>
       <div class="frete">
-        <label for="cep">Calcular frete:</label>
-        <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="8" />
-        <button id="calcular-frete">Calcular</button>
-        <p id="resultado-frete"></p>
+        <label for="cep" class="sr-only">Digite seu CEP</label>
+        <input type="text" id="cep" placeholder="Digite seu CEP (ex: 12345678)" maxlength="8" pattern="\d{8}" inputmode="numeric" aria-required="true" />
+        <button id="calcular-frete" type="button">Calcular Frete</button>
+        <p id="resultado-frete" aria-live="polite"></p>
       </div>
-      <button id="botao-pagar" class="btn-primary">Pagar</button>
+      <button id="botao-pagar" class="btn-primary" type="button" disabled>Pagar</button>
     </div>
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js" defer></script>
 
 </body>
 </html>
+
+
