@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minha Loja Online</title>
+  <meta name="description" content="Loja online com produtos de informática, roupas, acessórios e mais!">
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+ <!-- Header -->
+<header class="header">
+  <div class="container">
+    <nav class="menu">
+      <div class="menu-lateral">
+        <div class="categorias">
+          <a href="#" data-categoria="informatica"><i class="fas fa-laptop"></i> Informática</a>
+          <a href="#" data-categoria="roupas"><i class="fas fa-tshirt"></i> Roupas</a>
+          <a href="#" data-categoria="acessorios"><i class="fas fa-headphones-alt"></i> Acessórios</a>
+          <a href="#" data-categoria="celulares"><i class="fas fa-mobile-alt"></i> iPhones</a>
+        </div>
+        <div class="acoes">
+          <a href="#contato"><i class="fas fa-phone-alt"></i> Contato</a>
+          <a href="#carrinho" id="icone-carrinho"><i class="fas fa-shopping-cart"></i> Carrinho (<span id="contador-carrinho">0</span>)</a>
+          <a href="#" id="abrirLogin"><i class="fas fa-user-circle"></i> Entrar</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO COM CARROSSEL -->
+<section class="hero" id="hero">
+  <div class="container">
+    <h1>Explore Nossos Produtos</h1>
+    <p>Produtos de qualidade com preços que cabem no seu bolso.</p>
+    <a href="#produtos" class="btn-primary">Ver Produtos</a>
+  </div>
+</section>
+
+<!-- Produtos -->
+<section id="produtos" class="products">
+  <div class="container">
+    <h2>Produtos em Promoção</h2>
+    <div class="product-list" id="lista-produtos"></div>
+  </div>
+</section>
+
+<div id="popup-compra" class="popup-compra">
+  <div class="popup-content">
+    <span class="fechar-popup" id="fechar-popup">&times;</span>
+    <div class="popup-imagem">
+      <img src="" alt="Produto" id="popup-img" />
+    </div>
+    <div class="popup-info">
+      <h2 id="popup-nome"></h2>
+      <p>Preço antigo: <span id="popup-preco-antigo" style="text-decoration: line-through;"></span></p>
+      <p>Preço novo: <span id="popup-preco-novo" style="color: #4f46e5; font-weight: bold;"></span></p>
+      <div class="frete">
+        <label for="cep">Calcular frete:</label>
+        <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="8" />
+        <button id="calcular-frete">Calcular</button>
+        <p id="resultado-frete"></p>
+      </div>
+      <button id="botao-pagar" class="btn-primary">Pagar</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f1f3f5;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Containers */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+}
+
+/* Header */
+.header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Menu */
+.menu {
+  /* Como só tem um elemento, pode manter flex para garantir alinhamento */
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente se quiser */
+  align-items: center;
+}
+
+/* Menu lateral: categorias à esquerda, ações à direita */
+.menu-lateral {
+  display: flex;
+  justify-content: space-between; /* categorias à esquerda, ações à direita */
+  align-items: center;            /* alinhamento vertical */
+  width: 100%;                   /* ocupa toda a largura do container */
+  gap: 20px;
+}
+
+/* Categorias e ações */
+.categorias,
+.acoes {
+  display: flex;
+  gap: 15px;
+  flex-wrap: nowrap; /* evita quebra */
+}
+
+/* Links das categorias e ações */
+.categorias a,
+.acoes a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.3s ease;
+  white-space: nowrap; /* evita quebra no texto do link */
+}
+
+.categorias a:hover,
+.acoes a:hover {
+  color: #4f46e5;
+}
+
+.hero {
+  height: 80vh; /* altura total da tela */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover; /* cobre sem distorcer */
+  background-position: center center; /* centraliza */
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out;
+  position: relative;
+  text-align: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4); /* escurece para melhor leitura */
+  z-index: 0;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+  padding: 0 20px;
+}
+
+
+.hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  background-color: #10b981;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #059669;
+}
+
+/* Produtos */
+.products {
+  background-color: #fff;
+  padding: 80px 20px;
+}
+
+.products h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 60px;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 30px;
+}
+
+.product-card {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  text-align: center;
+  padding: 20px;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-weight: bold;
+  color: #4f46e5;
+  margin-bottom: 15px;
+}
+
+.btn-secondary {
+  background-color: #4f46e5;
+  color: white;
+  padding: 10px 24px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #3730a3;
+}
+
+/* Footer */
+.footer {
+  background-color: #111827;
+  color: #f1f5f9;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.9rem;
+}
+
+.popup-compra {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.popup-content {
+  background-color: #fff;
+  border-radius: 12px;
+  max-width: 700px;
+  width: 90%;
+  padding: 20px;
+  display: flex;
+  gap: 20px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.fechar-popup {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.popup-imagem img {
+  max-width: 300px;
+  border-radius: 10px;
+}
+
+.popup-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.frete {
+  margin-top: 20px;
+}
+
+#cep {
+  padding: 8px;
+  width: 150px;
+  margin-right: 10px;
+}
+
+#calcular-frete {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#resultado-frete {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #059669;
+}
+
+#botao-pagar {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.preco-antigo {
+  text-decoration: line-through;
+  color: #999;
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+}
+
+.preco-atual {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #e53935; /* vermelho para preço promocional */
+  margin: 0 0 15px 0;
+}
