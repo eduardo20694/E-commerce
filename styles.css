@@ -319,3 +319,13 @@ body {
     justify-content: center;
   }
 }
+
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
