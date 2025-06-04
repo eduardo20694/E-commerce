@@ -288,14 +288,27 @@ body {
   margin: 0 0 15px 0;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
+  .hero {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 40px 0;
+  }
+
   .hero h1 {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .hero p {
     font-size: 1rem;
+  }
+
+  .btn-primary {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
 
   .popup-content {
@@ -317,15 +330,6 @@ body {
   .categorias,
   .acoes {
     justify-content: center;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero {
-    height: auto;
-    aspect-ratio: 16 / 9;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
+    flex-wrap: wrap;
   }
 }
