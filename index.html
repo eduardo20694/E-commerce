@@ -25,7 +25,6 @@
           <a href="#" role="menuitem" data-categoria="celulares" class="categoria-link"><i class="fas fa-mobile-alt" aria-hidden="true"></i> iPhones</a>
         </div>
         <div class="acoes" role="menu" aria-label="Ações do usuário">
-          <a href="#contato" role="menuitem"><i class="fas fa-phone-alt" aria-hidden="true"></i> Contato</a>
           <a href="#carrinho" id="icone-carrinho" role="menuitem" aria-live="polite" aria-atomic="true">
             <i class="fas fa-shopping-cart" aria-hidden="true"></i> Carrinho (<span id="contador-carrinho">0</span>)
           </a>
@@ -37,6 +36,25 @@
     </nav>
   </div>
 </header>
+
+<!-- Modal login -->
+<div id="modal-login" class="modal-login" role="dialog" aria-modal="true" aria-labelledby="titulo-login" hidden>
+  <div class="modal-conteudo" role="document">
+    <button id="fechar-login" aria-label="Fechar modal">&times;</button>
+    <h2 id="titulo-login">Login</h2>
+    <form id="form-login">
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" name="usuario" required />
+      
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" required />
+      
+      <div id="erro-login" style="display:none; color:red;">Usuário ou senha inválidos.</div>
+      
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
+</div>
 
 <!-- HERO COM CARROSSEL -->
 <section class="hero" id="hero" role="region" aria-label="Seção principal">
@@ -76,6 +94,18 @@
     </div>
   </div>
 </div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="contato-footer">
+      <h4>Contato</h4>
+      <p><i class="fas fa-phone-alt"></i> (51) 98344-7659</p>
+      <p><i class="fas fa-envelope"></i> eduardo20694e@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Rua X, 123 - X, X</p>
+    </div>
+  </div>
+</footer>
+
 
 <script src="script.js" defer></script>
 

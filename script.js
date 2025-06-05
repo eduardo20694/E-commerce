@@ -208,5 +208,76 @@ setInterval(mudarSlide, 8000); // troca a cada 8 segundos
 // Inicializa lista com todos os produtos
 mostrarProdutos();
 
+document.addEventListener("DOMContentLoaded", () => {
+  const botaoAbrirLogin = document.getElementById("abrirLogin");
+  const modalLogin = document.getElementById("modal-login");
+  const botaoFecharLogin = document.getElementById("fechar-login");
+  const formularioLogin = document.getElementById("form-login");
+  const erroLogin = document.getElementById("erro-login");
 
+  // Função para criar botão Sair
+  function criarBotaoSair() {
+    const botaoSair = document.createElement("button");
+    botaoSair.id = "botaoSair";
+    botaoSair.textContent = "Sair?";
+    botaoSair.style.marginLeft = "10px";
+    botaoSair.style.cursor = "pointer";
+    botaoSair.style.background = "transparent";
+    botaoSair.style.border = "none";
+    botaoSair.style.color = "#3b82f6";
+    botaoSair.style.fontWeight = "600";
+    botaoSair.addEventListener("click", () => {
+      // Remove o botão sair
+      botaoSair.remove();
+      // Voltar para o estado original
+      botaoAbrirLogin.innerHTML = `<i class="fas fa-user-circle" aria-hidden="true"></i> Entrar`;
+      botaoAbrirLogin.disabled = false;
+    });
+    return botaoSair;
+  }
+
+  botaoAbrirLogin.addEventListener("click", () => {
+    modalLogin.hidden = false;
+    erroLogin.style.display = "none";
+    formularioLogin.usuario.value = "";
+    formularioLogin.senha.value = "";
+    formularioLogin.usuario.focus();
+  });
+
+  botaoFecharLogin.addEventListener("click", () => {
+    modalLogin.hidden = true;
+  });
+
+  formularioLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const usuario = formularioLogin.usuario.value.trim();
+    const senha = formularioLogin.senha.value.trim();
+
+    if(usuario === "admin" && senha === "admin") {
+      modalLogin.hidden = true;
+
+      // Remove o botão "Sair?" antigo caso exista
+      const botaoSairExistente = document.getElementById("botaoSair");
+      if (botaoSairExistente) {
+        botaoSairExistente.remove();
+      }
+
+      // Muda o botão de Entrar para "Olá Eduardo!" e desabilita
+      botaoAbrirLogin.innerHTML = `Olá Eduardo!`;
+      botaoAbrirLogin.disabled = true;
+
+      // Cria e insere o botão sair ao lado
+      const botaoSair = criarBotaoSair();
+      botaoAbrirLogin.parentNode.insertBefore(botaoSair, botaoAbrirLogin.nextSibling);
+    } else {
+      erroLogin.style.display = "block";
+    }
+  });
+
+  modalLogin.addEventListener("click", (e) => {
+    if(e.target === modalLogin) {
+      modalLogin.hidden = true;
+    }
+  });
+});
 
