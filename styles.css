@@ -347,16 +347,38 @@ body {
 
   .popup-content {
     flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    padding: 15px;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding: 1rem;
   }
 
-  .popup-imagem img {
-    max-width: 90vw;
+ .popup-imagem img {
+    max-width: 120px;
+    margin: 0 auto;
+    display: block;
   }
 
-  .menu-lateral {
+  .popup-info {
+    width: 100%;
+  }
+
+  #cep {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  #calcular-frete {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  #botao-pagar {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+.menu-lateral {
     flex-direction: column;
     gap: 10px;
   }
@@ -366,7 +388,7 @@ body {
     justify-content: center;
     flex-wrap: wrap;
   }
-}
+
 
 /* Sticky menu lateral */
 #menu-lateral {
