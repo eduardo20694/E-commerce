@@ -1,4 +1,4 @@
-// Produtos exemplo com categorias
+// Produtos exemplo com categorias e descrições
 const produtos = [
   {
     id: 1,
@@ -6,7 +6,8 @@ const produtos = [
     categoria: "informatica",
     precoAntigo: 4999.99,
     precoNovo: 4499.99,
-    img: "assets/images/pc3.avif"
+    img: "assets/images/pc3.avif",
+    descricao: "Notebook gamer com placa de vídeo dedicada, ideal para jogos e edição de vídeos."
   },
   {
     id: 2,
@@ -14,7 +15,8 @@ const produtos = [
     categoria: "informatica",
     precoAntigo: 4999.99,
     precoNovo: 4499.99,
-    img: "assets/images/pc.png"
+    img: "assets/images/pc.png",
+    descricao: "Notebook gamer potente com processador i7 e memória RAM de 16GB."
   },
   {
     id: 3,
@@ -22,7 +24,8 @@ const produtos = [
     categoria: "roupas",
     precoAntigo: 79.90,
     precoNovo: 59.90,
-    img: "assets/images/camisa2.png"
+    img: "assets/images/camisa2.png",
+    descricao: "Camiseta 100% algodão com estampa moderna e confortável."
   },
   {
     id: 4,
@@ -30,7 +33,8 @@ const produtos = [
     categoria: "roupas",
     precoAntigo: 79.90,
     precoNovo: 59.90,
-    img: "assets/images/camisa1.png"
+    img: "assets/images/camisa1.png",
+    descricao: "Camiseta casual com design exclusivo e tecido respirável."
   },
   {
     id: 5,
@@ -38,7 +42,8 @@ const produtos = [
     categoria: "acessorios",
     precoAntigo: 299.00,
     precoNovo: 249.00,
-    img: "assets/images/head1.webp"
+    img: "assets/images/head1.webp",
+    descricao: "Fone sem fio com cancelamento de ruído e autonomia de até 20 horas."
   },
   {
     id: 6,
@@ -46,7 +51,8 @@ const produtos = [
     categoria: "celulares",
     precoAntigo: 7999.99,
     precoNovo: 7399.99,
-    img: "assets/images/13pro.png"
+    img: "assets/images/13pro.png",
+    descricao: "Smartphone topo de linha com câmera avançada e tela OLED de alta definição."
   },
   {
     id: 7,
@@ -54,7 +60,8 @@ const produtos = [
     categoria: "celulares",
     precoAntigo: 7999.99,
     precoNovo: 5399.99,
-    img: "assets/images/16.webp"
+    img: "assets/images/16.webp",
+    descricao: "Modelo mais recente com recursos avançados de IA e desempenho superior."
   },
 ];
 
@@ -69,6 +76,7 @@ const fecharPopup = document.getElementById("fechar-popup");
 const popupNome = document.getElementById("popup-nome");
 const popupPrecoAntigo = document.getElementById("popup-preco-antigo");
 const popupPrecoNovo = document.getElementById("popup-preco-novo");
+const popupDescricao = document.getElementById("popup-descricao");
 const popupImg = document.getElementById("popup-img");
 const cepInput = document.getElementById("cep");
 const btnCalcularFrete = document.getElementById("calcular-frete");
@@ -125,13 +133,11 @@ function abrirPopupCompra(id) {
   popupNome.textContent = produtoSelecionado.nome;
   popupPrecoAntigo.textContent = `R$ ${produtoSelecionado.precoAntigo.toFixed(2)}`;
   popupPrecoNovo.textContent = `R$ ${produtoSelecionado.precoNovo.toFixed(2)}`;
+  popupDescricao.textContent = produtoSelecionado.descricao || "Produto sem descrição.";
   popupImg.src = produtoSelecionado.img;
-  resultadoFrete.textContent = "";
-  botaoPagar.disabled = true;
-  cepInput.value = "";
-  valorFreteAtual = 0;
+
+  botaoPagar.disabled = false; // Ativa o botão diretamente
   popupCompra.style.display = "flex";
-  cepInput.focus();
 }
 
 // Fechar popup
@@ -139,30 +145,17 @@ fecharPopup.addEventListener("click", () => {
   popupCompra.style.display = "none";
 });
 
-// Calcular frete (simulação)
-btnCalcularFrete.addEventListener("click", () => {
-  const cep = cepInput.value.trim();
-  if (!/^\d{8}$/.test(cep)) {
-    resultadoFrete.textContent = "Por favor, digite um CEP válido de 8 dígitos.";
-    resultadoFrete.style.color = "red";
-    botaoPagar.disabled = true;
-    return;
-  }
-  // Simular cálculo do frete: valor baseado em dígitos do CEP (exemplo fictício)
-  valorFreteAtual = (parseInt(cep.slice(-3)) % 50) + 10; // R$10 a R$59
-  resultadoFrete.textContent = `Frete calculado: R$ ${valorFreteAtual.toFixed(2)}`;
-  resultadoFrete.style.color = "green";
-  botaoPagar.disabled = false;
-});
-
-// Botão pagar (simulação de integração PagBrasil)
+// Botão Adicionar ao Carrinho
 botaoPagar.addEventListener("click", () => {
   if (!produtoSelecionado) return;
-  alert(`Redirecionando para pagamento:\nProduto: ${produtoSelecionado.nome}\nPreço: R$ ${produtoSelecionado.precoNovo.toFixed(2)}\nFrete: R$ ${valorFreteAtual.toFixed(2)}\nTotal: R$ ${(produtoSelecionado.precoNovo + valorFreteAtual).toFixed(2)}\n\n(Aqui você integraria com PagBrasil.)`);
 
-  // Simulação: adiciona produto no carrinho
+  alert(`Produto adicionado ao carrinho:\n${produtoSelecionado.nome}\nPreço: R$ ${produtoSelecionado.precoNovo.toFixed(2)}`);
+
+  // Adiciona ao carrinho
   carrinho.push(produtoSelecionado);
   atualizarContadorCarrinho();
+
+  // Fecha o popup
   popupCompra.style.display = "none";
 });
 
@@ -278,6 +271,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if(e.target === modalLogin) {
       modalLogin.hidden = true;
     }
-  });
+  })
 });
-

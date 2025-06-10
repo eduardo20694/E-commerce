@@ -52,11 +52,28 @@ body {
   flex-wrap: wrap;
 }
 
+/* Responsivo para menu lateral */
+@media (max-width: 768px) {
+  .menu-lateral {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
 .categorias,
 .acoes {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
+}
+
+/* Responsivo para categorias e acoes */
+@media (max-width: 768px) {
+  .categorias,
+  .acoes {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 }
 
 .categorias a,
@@ -76,6 +93,16 @@ body {
   color: #4f46e5;
 }
 
+/* Sticky menu lateral */
+#menu-lateral {
+  position: sticky;
+  top: 15px;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
+}
+
 /* Hero */
 .hero {
   height: 80vh;
@@ -89,6 +116,15 @@ body {
   transition: background-image 1s ease-in-out;
   position: relative;
   text-align: center;
+  background-image: url('assets/images/camisas.png');
+}
+
+.hero-slide-1 {
+  background-image: url('assets/images/head.jpg');
+}
+
+.hero-slide-2 {
+  background-image: url('assets/images/pc1.jpg');
 }
 
 .hero::before {
@@ -117,18 +153,24 @@ body {
   margin-bottom: 30px;
 }
 
-.btn-primary {
-  background-color: #10b981;
-  color: white;
-  padding: 12px 28px;
-  border-radius: 40px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
+/* Responsivo Hero */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    aspect-ratio: 16 / 9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 40px 0;
+  }
 
-.btn-primary:hover {
-  background-color: #059669;
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
 }
 
 /* Produtos */
@@ -203,14 +245,15 @@ body {
   font-size: 0.9rem;
 }
 
-/* Popup */
+/* Popup compra */
 .popup-compra {
   display: none;
   position: fixed;
-  top: 0; left: 0;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
   z-index: 2000;
@@ -220,19 +263,22 @@ body {
   display: flex;
 }
 
+/* Conteúdo central do popup */
 .popup-content {
   background-color: #fff;
   border-radius: 12px;
   max-width: 700px;
   width: 90%;
-  padding: 20px;
+  padding: 30px 20px;
   display: flex;
-  gap: 20px;
+  flex-direction: row;
+  gap: 25px;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   flex-wrap: wrap;
 }
 
+/* Botão de fechar */
 .fechar-popup {
   position: absolute;
   top: 15px;
@@ -243,51 +289,47 @@ body {
   user-select: none;
 }
 
+/* Imagem do produto */
+.popup-imagem {
+  flex: 0 0 250px;
+  max-width: 250px;
+}
+
 .popup-imagem img {
-  max-width: 300px;
   width: 100%;
-  border-radius: 10px;
   height: auto;
+  border-radius: 10px;
   object-fit: contain;
 }
 
+/* Informações do produto */
 .popup-info {
   flex: 1;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.frete {
+/* Botão "Adicionar ao Carrinho" */
+.popup-footer {
   margin-top: 20px;
+  text-align: right;
 }
 
-#cep {
-  padding: 8px;
-  width: 150px;
-  margin-right: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-#calcular-frete {
-  padding: 8px 16px;
-  cursor: pointer;
-  border: none;
-  background-color: #4f46e5;
+.btn-primary {
+  padding: 12px 28px;
+  border-radius: 40px;
+  background-color: #10b981;
   color: white;
-  border-radius: 6px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-#calcular-frete:hover {
-  background-color: #3730a3;
-}
-
-#resultado-frete {
-  margin-top: 10px;
-  font-weight: 600;
-  color: #059669;
+.btn-primary:hover {
+  background-color: #059669;
 }
 
 #botao-pagar {
@@ -321,30 +363,8 @@ body {
   margin: 0 0 15px 0;
 }
 
-/* Responsivo */
+/* Responsivo Popup */
 @media (max-width: 768px) {
-  .hero {
-    height: auto;
-    aspect-ratio: 16 / 9;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    padding: 40px 0;
-  }
-
-  .hero h1 {
-    font-size: 1.6rem;
-  }
-
-  .hero p {
-    font-size: 1rem;
-  }
-
-  .btn-primary {
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-
   .popup-content {
     flex-direction: column;
     max-height: 95vh;
@@ -352,7 +372,7 @@ body {
     padding: 1rem;
   }
 
- .popup-imagem img {
+  .popup-imagem img {
     max-width: 120px;
     margin: 0 auto;
     display: block;
@@ -361,82 +381,77 @@ body {
   .popup-info {
     width: 100%;
   }
-
-  #cep {
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-
-  #calcular-frete {
-    width: 100%;
-    margin-top: 0.5rem;
-  }
-
-  #botao-pagar {
-    width: 100%;
-    margin-top: 1rem;
-  }
 }
 
-.menu-lateral {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .categorias,
-  .acoes {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-
-/* Sticky menu lateral */
-#menu-lateral {
-  position: sticky;
-  top: 15px;
-  background: #fff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  box-shadow: 0 3px 8px rgb(0 0 0 / 0.1);
-}
-
-/* Hero carrossel backgrounds */
-.hero {
-  background-image: url('assets/images/camisas.png');
-}
-
-.hero-slide-1 {
-  background-image: url('assets/images/head.jpg');
-}
-
-.hero-slide-2 {
-  background-image: url('assets/images/pc1.jpg');
-}
-
-
-/* Para esconder scrollbar no menu lateral no mobile */
-.menu-lateral::-webkit-scrollbar {
-  display: none;
-}
-
-/* Classe ativa para categoria */
-.categoria-link.active {
-  color: #10b981 !important;
-  font-weight: 700;
-  border-bottom: 2px solid #10b981;
-}
-
-/* Sr-only para acessibilidade */
+/* Tela para leitores de tela */
 .sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0,0,0,0);
-  border: 0;
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
 }
+
+/* Elementos não clicáveis */
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.footer {
+  background: linear-gradient(135deg, #0a192f, #0f243d);
+  color: #a1caff;
+  padding: 3rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  border-top: 3px solid #1ca7ff;
+  box-shadow: 0 -5px 15px rgba(28, 167, 255, 0.4);
+}
+
+.contato-footer {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.contato-footer h4 {
+  margin-bottom: 1.5rem;
+  color: #1ca7ff;
+  font-weight: 700;
+  font-size: 1.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(28, 167, 255, 0.7);
+}
+
+.contato-footer p {
+  margin: 0.7rem 0;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  color: #9ec9ff;
+  transition: color 0.3s ease;
+  cursor: default;
+}
+
+.contato-footer p:hover {
+  color: #1ca7ff;
+}
+
+.contato-footer i {
+  color: #1ca7ff;
+  font-size: 1.3rem;
+  transition: transform 0.25s ease;
+}
+
+.contato-footer p:hover i {
+  transform: scale(1.15);
+}
+
 .modal-login {
   position: fixed;
   inset: 0; /* shorthand para top:0; left:0; right:0; bottom:0; */
@@ -558,53 +573,3 @@ body {
   text-decoration: underline;
 }
 
-.footer {
-  background: linear-gradient(135deg, #0a192f, #0f243d);
-  color: #a1caff;
-  padding: 3rem 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  border-top: 3px solid #1ca7ff;
-  box-shadow: 0 -5px 15px rgba(28, 167, 255, 0.4);
-}
-
-.contato-footer {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.contato-footer h4 {
-  margin-bottom: 1.5rem;
-  color: #1ca7ff;
-  font-weight: 700;
-  font-size: 1.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-shadow: 0 0 5px rgba(28, 167, 255, 0.7);
-}
-
-.contato-footer p {
-  margin: 0.7rem 0;
-  font-size: 1.1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.8rem;
-  color: #9ec9ff;
-  transition: color 0.3s ease;
-  cursor: default;
-}
-
-.contato-footer p:hover {
-  color: #1ca7ff;
-}
-
-.contato-footer i {
-  color: #1ca7ff;
-  font-size: 1.3rem;
-  transition: transform 0.25s ease;
-}
-
-.contato-footer p:hover i {
-  transform: scale(1.15);
-}
