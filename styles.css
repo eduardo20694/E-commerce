@@ -367,21 +367,43 @@ body {
 @media (max-width: 768px) {
   .popup-content {
     flex-direction: column;
-    max-height: 95vh;
+    max-height: 85vh;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 0.5rem;
+    gap: 0.5rem;
   }
 
   .popup-imagem img {
-    max-width: 120px;
-    margin: 0 auto;
+    max-width: 180px;
+    margin: 0.5rem auto 0;
     display: block;
   }
 
   .popup-info {
     width: 100%;
+    padding: 0.5rem 0;
+  }
+
+  .popup-info > * {
+    margin-bottom: 0.3rem; /* ainda mais compacto */
+  }
+
+  /* Ajuste específico para o botão */
+  .add-to-cart {
+    margin-top: 0.1rem;
+  }
+
+  /* Se tiver uma descrição com <p>, <span>, etc. */
+  .popup-info p,
+  .popup-info span,
+  .popup-info h2,
+  .popup-info h3 {
+    margin-bottom: 0.3rem;
+    line-height: 1.3; /* menor altura de linha */
   }
 }
+
+
 
 /* Tela para leitores de tela */
 .sr-only {
