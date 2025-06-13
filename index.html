@@ -98,6 +98,41 @@
   </div>
 </div>
 
+<!-- Popup Carrinho -->
+<div id="popup-carrinho" class="popup-carrinho" role="dialog" aria-modal="true" aria-labelledby="titulo-carrinho">
+  <div class="popup-content">
+    <button class="fechar-popup" id="fechar-carrinho" aria-label="Fechar carrinho">&times;</button>
+    <h2 id="titulo-carrinho">Seu Carrinho</h2>
+
+    <!-- Lista de itens no carrinho -->
+    <div id="itens-carrinho"></div>
+
+    <!-- Calcular frete -->
+    <div class="frete">
+      <label for="cep">Calcular Frete (CEP):</label>
+      <input type="text" id="cep" maxlength="9" placeholder="00000-000">
+      <button id="btn-calcular-frete">Calcular</button>
+      <p id="resultado-frete"></p>
+    </div>
+
+    <!-- Pagamento -->
+    <div class="pagamento">
+      <h3>Pagamento</h3>
+      <label for="numero-cartao">Número do Cartão:</label>
+      <input type="text" id="numero-cartao" placeholder="0000 0000 0000 0000">
+
+      <label for="validade">Validade:</label>
+      <input type="text" id="validade" placeholder="MM/AA">
+
+      <label for="cvv">CVV:</label>
+      <input type="text" id="cvv" placeholder="123">
+
+      <button id="btn-finalizar-compra" class="btn-primary">Finalizar Compra</button>
+    </div>
+  </div>
+</div>
+
+
 <footer class="footer">
   <div class="container">
     <div class="contato-footer">
