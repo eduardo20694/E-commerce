@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   botaoPagar.addEventListener("click", () => {
     if (!produtoSelecionado) return;
-    alert(`Produto adicionado ao carrinho: ${produtoSelecionado.nome}`);
+   // alert(`Produto adicionado ao carrinho: ${produtoSelecionado.nome}`); //
     carrinho.push(produtoSelecionado);
     atualizarContadorCarrinho();
     popupCompra.style.display = "none";
