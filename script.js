@@ -132,12 +132,22 @@ if (produtoSelecionado.tamanhos) {
   });
 
   botaoPagar.addEventListener("click", () => {
-    if (!produtoSelecionado) return;
-   // alert(`Produto adicionado ao carrinho: ${produtoSelecionado.nome}`); //
-    carrinho.push(produtoSelecionado);
-    atualizarContadorCarrinho();
-    popupCompra.style.display = "none";
-  });
+  if (!produtoSelecionado) return;
+
+  // Se o produto tem tamanhos, verifica se o usuário escolheu algum
+  if (produtoSelecionado.tamanhos && produtoSelecionado.tamanhos.length > 0) {
+    if (!produtoSelecionado.tamanhoEscolhido) {
+      alert("Por favor, escolha um tamanho antes de adicionar.");
+      return;
+    }
+  }
+
+  // Aqui adiciona direto (não verifica duplicado para simplificar)
+  carrinho.push({ ...produtoSelecionado });
+  atualizarContadorCarrinho();
+  popupCompra.style.display = "none";
+});
+
 
   function atualizarContadorCarrinho() {
     contadorCarrinho.textContent = carrinho.length;
@@ -206,13 +216,13 @@ function atualizarPopupCarrinho() {
       <img src="${item.img}" alt="${item.nome}" style="width:60px; height:auto; margin-right:10px;">
       <div>
         <p><strong>${item.nome}</strong></p>
+        ${item.tamanhoEscolhido ? `<p>Tamanho: ${item.tamanhoEscolhido}</p>` : ""}
         <p>R$ ${item.precoNovo.toFixed(2)}</p>
       </div>
     `;
     itensCarrinho.appendChild(div);
   });
 }
-
 
   // Login
   const botaoAbrirLogin = document.getElementById("abrirLogin");
