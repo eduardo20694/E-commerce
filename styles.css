@@ -228,9 +228,11 @@ body {
 
 .product-card img {
   width: 100%;
+  aspect-ratio: 4 / 3; /* ou outra proporção que quiser */
+  object-fit: contain;
   border-radius: 10px;
   margin-bottom: 15px;
-  object-fit: cover;
+  background-color: #f9fafb;
 }
 
 .product-card h3 {
